@@ -14,6 +14,14 @@ const Button = ({onClick, text}) => {
   )
 }
 
+const Stat = ({text, stat}) => {
+  return (
+    <div>
+      <p>{text}: {stat}</p>
+    </div>
+  )
+}
+
 const Stats = ({good, neutral, bad, total, average, percentage}) => {
 
   if (total === 0) {
@@ -21,12 +29,12 @@ const Stats = ({good, neutral, bad, total, average, percentage}) => {
   } else {
   return (
     <div>
-      <p>good reviews: {good}</p>
-      <p>neutral reviews: {neutral}</p>
-      <p>bad reviews: {bad}</p>
-      <p>total reviews: {total}</p>
-      <p>average rating: {average}</p>
-      <p>positive ratings: {percentage} %</p>
+      <Stat text="good reviews" stat={good}/>
+      <Stat text="neutral reviews" stat={neutral}/>
+      <Stat text="bad reviews" stat={bad}/>
+      <Stat text="total reviews" stat={total}/>
+      <Stat text="average rating" stat={average}/>
+      <Stat text="positive rating %" stat={percentage}/>
     </div>
   )
 }
@@ -61,15 +69,14 @@ const App = () => {
       <Button onClick={incrementNeutral} text="neutral"/>
       <Button onClick={incrementBad} text="bad"/>
       <Title text="feedback stats"/>
-      <Stats 
-        good={good} 
-        neutral={neutral} 
-        bad={bad} 
-        total={total} 
+      <Stats
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
         average={average}
         percentage={percentage}
       />
-      
     </div>
   )
 }
