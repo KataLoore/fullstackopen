@@ -16,9 +16,10 @@ const Button = ({onClick, text}) => {
 
 const Stat = ({text, stat}) => {
   return (
-    <div>
-      <p>{text}: {stat}</p>
-    </div>
+    <tr>
+      <td style={{ border: '1px solid black'}}><p>{text}:</p></td>
+      <td style={{ border: '1px solid black'}}><p>{stat}</p></td>
+    </tr>
   )
 }
 
@@ -28,14 +29,16 @@ const Stats = ({good, neutral, bad, total, average, percentage}) => {
     return (<p>No reviews yet</p>)
   } else {
   return (
-    <div>
+    <table>
+      <tbody>
       <Stat text="good reviews" stat={good}/>
       <Stat text="neutral reviews" stat={neutral}/>
       <Stat text="bad reviews" stat={bad}/>
       <Stat text="total reviews" stat={total}/>
       <Stat text="average rating" stat={average}/>
       <Stat text="positive rating %" stat={percentage}/>
-    </div>
+      </tbody>
+    </table>
   )
 }
 }
