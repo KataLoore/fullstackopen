@@ -16,6 +16,9 @@ const Button = ({onClick, text}) => {
 
 const Stats = ({good, neutral, bad, total, average, percentage}) => {
 
+  if (total === 0) {
+    return (<p>No reviews yet</p>)
+  } else {
   return (
     <div>
       <p>good reviews: {good}</p>
@@ -26,6 +29,7 @@ const Stats = ({good, neutral, bad, total, average, percentage}) => {
       <p>positive ratings: {percentage} %</p>
     </div>
   )
+}
 }
 
 const App = () => {
