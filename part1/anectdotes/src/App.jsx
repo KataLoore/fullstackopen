@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
-const Button = ({anectdote, onClick, text}) => {
+const Button = ({onClick, text}) => {
   return (
     <div>
-      <p>{anectdote}</p>
       <button onClick={onClick}>
         {text}
       </button>
@@ -23,15 +22,44 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState ({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 })
 
   const updateSelected = () => {
     const index = Math.floor(Math.random() * 8)
     setSelected(index)
   }
+
+  const updateVotes = () => {
+    const copy = {...votes}
+    copy[selected] += 1
+    setVotes(copy)
+  }
+
+  const getTopAnecdote = () => {
+    let max = 0
+    let voteIndex = 0
+
+    for (let i = 0; i < anecdotes.length; i++) {
+      if (votes[i] > max) {
+        max = votes[i]
+        voteIndex = i
+      }
+    }
+
+    return voteIndex
+  }
   
   return (
     <div>
-      <Button anectdote={anecdotes[selected]} onClick={updateSelected} text="Give me an anectdote!"/>
+      <h2>Anecdote of the day</h2>
+      <p>"{anecdotes[selected]}"</p>
+      <p>This anectdote has {votes[selected]} upvotes</p>
+      <Button onClick={updateVotes} text="Upvote this anectdote"/>
+      <br></br>
+      <Button onClick={updateSelected} text="Give me another anectdote!"/>
+      <h2>Top Anecdote</h2>
+      <p>This is the most upvoted anectdote, coming in at {votes[getTopAnecdote()]} votes:</p>
+      <p>"{anecdotes[getTopAnecdote()]}"</p>
     </div>
   )
 }
