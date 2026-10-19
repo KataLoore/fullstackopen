@@ -1,6 +1,11 @@
+<img width="946" height="269" alt="image" src="https://github.com/user-attachments/assets/ed297553-ed2a-43ce-85ae-74daca4d9bf7" />
+
 # Full Stack Open
 
-**A full-stack web development course from the University of Helsinki**
+
+### **A full-stack web development course from The University of Helsinki**
+
+
 
 This repository documents my progress through [Full Stack Open](https://fullstackopen.com/en/about/), a comprehensive course in modern web development using JavaScript and TypeScript.
 
