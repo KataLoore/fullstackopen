@@ -10,9 +10,14 @@ const App = () => {
     event.preventDefault()
     console.log('button clicked', event.target)
     const personObject = {name: newName}
-    setPersons(persons.concat(personObject))
-    setNewName('')
 
+    if (!persons.some(person => person.name === newName)) {
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    } else {
+      alert(`${newName} is already added to phonebook`)
+    }
+    
   }
 
   const handleNameChange = (event) => {
