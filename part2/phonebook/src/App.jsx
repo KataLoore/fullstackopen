@@ -18,27 +18,37 @@ const App = () => {
   }, [])
 
   const addNewPerson = (event) => {
-    event.preventDefault()
-    const personObject = {name: newName, number: newNumber}
+  event.preventDefault()
 
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
+  const existingPerson = persons.find(person => person.name === newName)
 
-    } else if (persons.some(person => person.number === newNumber)) {
-      alert(`${newNumber} is already added to phonebook`)
+  if (existingPerson) {
+    if (window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`) === true) {
 
-    } else { personService.addPerson(personObject)
+      const changedPerson = { ...existingPerson, number: newNumber }
+
+      personService.updatePerson(existingPerson.id, changedPerson)
         .then(returnedPerson => {
-          setPersons(currentPersons => currentPersons.concat(returnedPerson))
+          setPersons(currentPersons =>
+            currentPersons.map(person =>
+              person.id === existingPerson.id ? returnedPerson : person
+            )
+          )
           setNewName('')
           setNewNumber('')
         })
-        .catch(error => {
-          console.error('Failed addNewPerson:', error)
-          alert('Could not save the person to the server')
-        })
     }
+  } else {
+    const personObject = { name: newName, number: newNumber }
+
+    personService.addPerson(personObject)
+      .then(returnedPerson => {
+        setPersons(currentPersons => currentPersons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
   }
+}
 
   const handleDelete = (id, name) => {
   if (window.confirm(`Delete ${name}?`)) {
