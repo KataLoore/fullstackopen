@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Search from './components/Search'
 import Persons from './components/Persons'
 import Form from './components/Form'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,10 +11,9 @@ const App = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService.getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
@@ -28,10 +27,16 @@ const App = () => {
     } else if (persons.some(person => person.number === newNumber)) {
       alert(`${newNumber} is already added to phonebook`)
 
-    } else {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+    } else { personService.addPerson(personObject)
+        .then(returnedPerson => {
+          setPersons(currentPersons => currentPersons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          console.error('Failed addNewPerson:', error)
+          alert('Could not save the person to the server')
+        })
     }
   }
 
