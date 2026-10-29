@@ -40,6 +40,21 @@ const App = () => {
     }
   }
 
+  const handleDelete = (id, name) => {
+  if (window.confirm(`Delete ${name}?`)) {
+    personService.deletePerson(id)
+      .then(() => {
+        setPersons(currentPersons =>
+          currentPersons.filter(person => person.id !== id)
+        )
+      })
+      .catch(error => {
+        console.error('Failed to delete person:', error)
+        alert(`Could not delete ${name}`)
+      })
+  }
+}
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -66,7 +81,7 @@ const App = () => {
       />
       <h2>Numbers</h2>
         <Search search={search} handleSearch={handleSearch} />
-        <Persons personsToShow={personsToShow}/>  
+        <Persons personsToShow={personsToShow} handleDelete={handleDelete}/>  
     </div>
   )
 }
