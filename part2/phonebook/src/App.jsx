@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
   const [notification, setNotification] = useState(null)
+  const [notificationType, setNotificationType] = useState('success')
 
   useEffect(() => {
     personService.getAll()
@@ -32,12 +33,21 @@ const App = () => {
       personService.updatePerson(existingPerson.id, changedPerson)
         .then(returnedPerson => {
           setPersons(currentPersons =>
-            currentPersons.map(person =>
-              person.id === existingPerson.id ? returnedPerson : person
-            )
-          )
+            currentPersons.map(person => person.id === existingPerson.id ? returnedPerson : person))
           setNewName('')
           setNewNumber('')
+        })
+        .catch(() => {
+          setNotification(`${existingPerson.name} has been removed from the phonebook server.`)
+          setNotificationType('error')
+
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
+
+          setPersons(currentPersons =>
+            currentPersons.filter(person => person.id !== existingPerson.id)
+          )
         })
     }
   } else {
@@ -46,7 +56,8 @@ const App = () => {
     personService.addPerson(personObject)
       .then(returnedPerson => {
         setPersons(currentPersons => currentPersons.concat(returnedPerson))
-
+        
+        setNotificationType('success')
         setNotification(
                   `'${personObject.name}' was successfully added to the phonebook.`
                 )
@@ -92,7 +103,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification notification={notification}/>
+      <Notification notification={notification} type={notificationType} />
       <Form 
         addNewPerson={addNewPerson}
         newName={newName}
