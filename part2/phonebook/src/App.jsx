@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Search from './components/Search'
 import Persons from './components/Persons'
 import Form from './components/Form'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     personService.getAll()
@@ -44,6 +46,14 @@ const App = () => {
     personService.addPerson(personObject)
       .then(returnedPerson => {
         setPersons(currentPersons => currentPersons.concat(returnedPerson))
+
+        setNotification(
+                  `'${personObject.name}' was successfully added to the phonebook.`
+                )
+                setTimeout(() => {
+                  setNotification(null)
+                }, 5000)
+
         setNewName('')
         setNewNumber('')
       })
@@ -82,6 +92,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification}/>
       <Form 
         addNewPerson={addNewPerson}
         newName={newName}

@@ -19,6 +19,21 @@
       "name": "babba",
       "number": "1234 5678",
       "id": "w_aov7yaIzU"
+    },
+    {
+      "name": "test",
+      "number": "12345688",
+      "id": "Fb9B5V0q-vY"
+    },
+    {
+      "name": "test2",
+      "number": "73821498",
+      "id": "rSprC9u4N_c"
+    },
+    {
+      "name": "Pam Param",
+      "number": "8978 3218",
+      "id": "O9E---1gWFM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
