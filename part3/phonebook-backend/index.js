@@ -1,6 +1,9 @@
 const express = require('express') // import express
+const morgan = require('morgan') // import morgan
+
 const app = express() // init backend express app
 app.use(express.json()) // enable JSON readaility in routes
+app.use(morgan('tiny')) // enable middleware logging
 
 // Mock data
 let persons = [
@@ -72,7 +75,7 @@ app.post('/api/persons', (request, response) => { // POST new person
     } else if (persons.find(person => person.name === body.name)) {
         console.log("error: name must be unique")
         return response.status(400).json({error: 'name must be unique'})
-        
+
     } else { console.log("success: added new person ", body) }
 
     const person = {
