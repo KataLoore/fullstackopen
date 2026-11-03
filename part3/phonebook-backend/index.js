@@ -26,11 +26,12 @@ let persons = [
 ]
 
 // Routes
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response) => { // GET persons array
+    console.log(persons)
     response.json(persons)
 })
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response) => { // Get information
     const date = new Date()
 
     response.send(`
@@ -41,7 +42,7 @@ app.get('/info', (request, response) => {
     `)
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response) => { // GET person
     const id = request.params.id
     const person = persons.find(person => person.id === id)
     console.log(id, person)
@@ -51,7 +52,13 @@ app.get('/api/persons/:id', (request, response) => {
     } else {
         response.status(404).end()
     }
-    
+})
+
+app.delete('/api/persons/:id', (request, response) => { // DELETE person
+    const id = request.params.id
+    persons = persons.filter(person => person.id !== id)
+    console.log(persons)
+    response.status(204).end()
 })
 
 // Run server 'npm run dev'
