@@ -1,5 +1,6 @@
 const express = require('express') // import express
 const app = express() // init backend express app
+app.use(express.json()) // enable JSON readaility in routes
 
 // Mock data
 let persons = [
@@ -59,6 +60,24 @@ app.delete('/api/persons/:id', (request, response) => { // DELETE person
     persons = persons.filter(person => person.id !== id)
     console.log(persons)
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => { // POST new person
+    const body = request.body
+    
+    if(!body.name || !body.number) {
+        return response.status(400).json({error: 'missing body content'})
+    } else { console.log(body) }
+
+    const person = {
+        name: body.name,
+        number: body.number,
+        id: String(Math.floor(Math.random() * 10000))
+    }
+
+    persons = persons.concat(person)
+    console.log(persons)
+    response.json(person)
 })
 
 // Run server 'npm run dev'
