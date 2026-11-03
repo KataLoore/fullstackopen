@@ -3,7 +3,13 @@ const morgan = require('morgan') // import morgan
 
 const app = express() // init backend express app
 app.use(express.json()) // enable JSON readaility in routes
-app.use(morgan('tiny')) // enable middleware logging
+
+// logs "POST /api/persons 200 54 - 3.370 ms"
+// app.use(morgan('tiny')) 
+
+// logs "POST /api/persons 400 31 - 0.857 ms {\"name\":\"Morgan Morgan\",\"number\":\"4738 4398\"}"
+morgan.token('body', request => JSON.stringify(request.body))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body')) 
 
 // Mock data
 let persons = [
