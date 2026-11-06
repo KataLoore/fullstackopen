@@ -1,15 +1,15 @@
 const express = require('express') // import express
 const morgan = require('morgan') // import morgan
+const cors = require('cors')
 
 const app = express() // init backend express app
 app.use(express.json()) // enable JSON readaility in routes
-
-// logs "POST /api/persons 200 54 - 3.370 ms"
-// app.use(morgan('tiny')) 
+app.use(morgan('tiny')) // logs "POST /api/persons 200 54 - 3.370 ms"
+app.use(cors())
 
 // logs "POST /api/persons 400 31 - 0.857 ms {\"name\":\"Morgan Morgan\",\"number\":\"4738 4398\"}"
-morgan.token('body', request => JSON.stringify(request.body))
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body')) 
+// morgan.token('body', request => JSON.stringify(request.body))
+// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body')) 
 
 // Mock data
 let persons = [
@@ -36,10 +36,7 @@ let persons = [
 ]
 
 // Routes
-app.get('/api/persons', (request, response) => { // GET persons array
-    console.log(persons)
-    response.json(persons)
-})
+app.get('/api/persons', (request, response) => { response.json(persons)})
 
 app.get('/info', (request, response) => { // Get information
     const date = new Date()
@@ -96,5 +93,5 @@ app.post('/api/persons', (request, response) => { // POST new person
 })
 
 // Run server 'npm run dev'
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
