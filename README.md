@@ -11,6 +11,8 @@ This repository documents my progress through [Full Stack Open](https://fullstac
 
 The course focuses on developing single-page applications with **React**, building **RESTful APIs with Node.js and Express**, and integrating databases. It also covers testing, authentication, state management, GraphQL, mobile development, CI/CD, and containerization.
 
+Web deployments use Render and can be found [here](https://fullstackopen-74qp.onrender.com/).
+
 ## Course Contents
 
 ### Part 0 – Fundamentals of Web Apps

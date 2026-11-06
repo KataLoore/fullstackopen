@@ -1,15 +1,12 @@
 const express = require('express') // import express
 const morgan = require('morgan') // import morgan
-const cors = require('cors')
+// const cors = require('cors') // CORS for when frontend is *not* on a relative URL address
 
 const app = express() // init backend express app
 app.use(express.json()) // enable JSON readaility in routes
 app.use(morgan('tiny')) // logs "POST /api/persons 200 54 - 3.370 ms"
-app.use(cors())
-
-// logs "POST /api/persons 400 31 - 0.857 ms {\"name\":\"Morgan Morgan\",\"number\":\"4738 4398\"}"
-// morgan.token('body', request => JSON.stringify(request.body))
-// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body')) 
+// app.use(cors())
+app.use(express.static('dist'))
 
 // Mock data
 let persons = [
